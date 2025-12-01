@@ -42,7 +42,7 @@
 
   
 
-## 🔴 Kafka
+# 🔴 Kafka
 
 <mark><strong>Event-driven order ingestion with Apache Kafka</strong></mark>
 
@@ -196,7 +196,7 @@ Consumer --> Terminal[Console Output]
 
 # 🟣 Prompt-to-Code AI Agent CLI
 
-## AI-Agents
+<mark><strong>A simplistic programmable implemetation of AI-Agent</strong></mark>
 
 Repository: [nitinsriv/ai-agents](https://github.com/nitinsriv/ai-agents)
 
@@ -288,8 +288,6 @@ public class BinarySearch {
 ---
 
 # 🟢 Data Science (Data preparation, analytics, ML algos)
-
-## Data-Science-IIITB
 
 <mark><strong>Academic & Reproducible Data Science in R</strong></mark>
 
