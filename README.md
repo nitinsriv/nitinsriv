@@ -8,7 +8,7 @@
 
   
 
-- Each topic is structured as:
+Each topic is structured as:
 
 1. **Outcome-first summary**
 
