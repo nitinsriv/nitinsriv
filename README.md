@@ -50,7 +50,7 @@
 
   
 
-<details  open>
+<details>
 
 <summary><strong>🎯 High-level Outcome</strong></summary>
 
