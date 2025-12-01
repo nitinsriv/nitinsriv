@@ -8,7 +8,7 @@
 
   
 
-- Each project is structured as:
+- Each topic is structured as:
 
 1. **Outcome-first summary**
 
@@ -202,7 +202,7 @@ Repository: [nitinsriv/ai-agents](https://github.com/nitinsriv/ai-agents)
 
   
 
-<details  open>  <summary><strong>🎯 High-level Outcome </strong></summary>
+<details>  <summary><strong>🎯 High-level Outcome </strong></summary>
 
 ✅ A compact CLI-based Prompt-to-Code AI Agent
 
@@ -212,7 +212,8 @@ Repository: [nitinsriv/ai-agents](https://github.com/nitinsriv/ai-agents)
 
   
 
-</details>  <details>  <summary><strong>📄 Exact README Excerpts & Usage (Verbatim)</strong></summary>
+</details>  
+<details>  <summary><strong>📄 README Excerpts & Usage (Verbatim)</strong></summary>
 
 🧾 Description
 
@@ -253,18 +254,21 @@ public class BinarySearch {
 
 }
 ```
-</details>  <details>  <summary><strong>🛠 Representative Flow & Notes</strong></summary>
+</details>  
+
+<details>  <summary><strong>🛠 Representative Flow & Notes</strong></summary>
 
  - Extracts first fenced markdown code block 
  - Saves to output.txt Uses
- -  regex-based parsing  
+ - regex-based parsing  
 
 ⚠️ Extraction assumes markdown format and only captures the first block
 
   
 
-</details>  <details>  <summary><strong>🧱 Architecture Diagram</strong>
-</summary>
+</details> 
+
+<details>  <summary><strong>🧱 Architecture Diagram</strong></summary>
 
 ```mermaid
     graph TD;
@@ -293,7 +297,7 @@ Repository: [nitinsriv/Data-Science-IIITB](https://github.com/nitinsriv/Data-Sci
 
   
 
-<details  open>  <summary><strong>🎯 High-level Outcome (Elevator Pitch)</strong></summary>
+<details>  <summary><strong>🎯 High-level Outcome (Elevator Pitch)</strong></summary>
 
 📊 Data science coursework and labs authored in R, supporting reproducible analysis and use-cases.
 
