@@ -28,7 +28,7 @@
 
   
 
-## 🧩 Project Index
+## 🧩 Index
 
 🔴 **Kafka** — Event-driven order ingestion demo
 
@@ -192,8 +192,11 @@ Consumer --> Terminal[Console Output]
 
 </details>
 
-# Prompt-to-Code AI Agent CLI
-🟣 AI-Agents
+---
+
+# 🟣 Prompt-to-Code AI Agent CLI
+
+## AI-Agents
 
 Repository: [nitinsriv/ai-agents](https://github.com/nitinsriv/ai-agents)
 
@@ -278,8 +281,11 @@ public class BinarySearch {
 
 </details>
 
-# Data Science (Data preparation, analytics, ML algos)
-🟢 Data-Science-IIITB
+---
+
+# 🟢 Data Science (Data preparation, analytics, ML algos)
+
+## Data-Science-IIITB
 
 <mark><strong>Academic & Reproducible Data Science in R</strong></mark>
 
