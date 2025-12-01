@@ -295,7 +295,7 @@ Repository: [nitinsriv/Data-Science-IIITB](https://github.com/nitinsriv/Data-Sci
 
   
 
-<details>  <summary><strong>🎯 High-level Outcome (Elevator Pitch)</strong></summary>
+<details>  <summary><strong>🎯 High-level Outcome </strong></summary>
 
 📊 Data science coursework and labs authored in R, supporting reproducible analysis and use-cases.
 
