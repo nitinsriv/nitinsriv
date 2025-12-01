@@ -46,7 +46,7 @@
 
 <mark><strong>Event-driven order ingestion with Apache Kafka</strong></mark>
 
-**Repository:**  [nitinsriv/Kafk]([https://github.com/nitinsriv/Kafka)
+**Repository:**  [nitinsriv/Kafka](https://github.com/nitinsriv/Kafka)
 
   
 
