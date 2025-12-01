@@ -289,7 +289,7 @@ public class BinarySearch {
 
 # 🟢 Data Science (Data preparation, analytics, ML algos)
 
-<mark><strong>Academic & Reproducible Data Science in R</strong></mark>
+<mark><strong>Academic Data Science in R</strong></mark>
 
 Repository: [nitinsriv/Data-Science-IIITB](https://github.com/nitinsriv/Data-Science-IIITB)
 
