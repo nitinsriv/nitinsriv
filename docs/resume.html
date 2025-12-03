@@ -175,16 +175,32 @@
                     tenure: 3,
                     summary: "Leading AI adoption and modernizing data delivery architecture for global IT/OT integrations.",
                     details: [
-                        "**AI Adoption & Community:** o	Delivered AI enablement solution by deploying Copilot Studio agents with curated knowledge sources for scalable self-service support, improving time-to-answer and reducing support load.
-o	Owned GitHub Enterprise Cloud and Copilot operations, researching security, data-protection, AI models, and MCP server capabilities.
-o	Drove enterprise-wide adoption of AI-assisted development (GPT-5.1, Claude) across global team of 150+ users located in US, APAC and EU regions, improving efficiency across engineering teams.
-o	Facilitated and led global workshops, established an active GitHub user community for cross-organizational knowledge sharing on AI literacy and usage across engineering teams.
-o	Partnered with Microsoft on roadmaps, feature adoption, user workshops and enablement, influencing enterprise developer experience and tooling strategy.
-",
-                        "**IIoT Architecture:** Implemented HiveMQ Edge adapters for logistic automation (Viadat XML/JSON) and deployed Azure Functions.",
-                        "**Architectural Strategy:** Drove strategy for Data Mesh architecture transition and data product ownership.",
-                        "**DevOps Automation:** Led implementation of self-hosted runners and pipelines using GitHub Workflows and Azure DevOps.",
-                        "**Service Delivery:** Owned global delivery, SDLC, and managed regional budgets."
+                        {
+                            heading: "AI Adoption & Community",
+                            items: [
+                                "Delivered AI enablement solution by deploying Copilot Studio agents with curated knowledge sources for scalable self-service support, improving time-to-answer and reducing support load.",
+                                "Owned GitHub Enterprise Cloud and Copilot operations, researching security, data-protection, AI models, and MCP server capabilities.",
+                                "Drove enterprise-wide adoption of AI-assisted development (GPT-5.1, Claude) across 150+ users across US, APAC, and EU, enhancing engineering efficiency.",
+                                "Facilitated and led global workshops, establishing a GitHub user community for AI literacy and usage sharing.",
+                                "Partnered with Microsoft on roadmaps, feature adoption, workshops, and enablement, influencing developer experience and tooling strategy."
+                            ]
+                        },
+                        {
+                            heading: "IIoT Architecture",
+                            items: ["Implemented HiveMQ Edge adapters for logistic automation (Viadat XML/JSON) and deployed Azure Functions."]
+                        },
+                        {
+                            heading: "Architectural Strategy",
+                            items: ["Drove strategy for Data Mesh architecture transition and data product ownership."]
+                        },
+                        {
+                            heading: "DevOps Automation",
+                            items: ["Led implementation of self-hosted runners and pipelines using GitHub Workflows and Azure DevOps."]
+                        },
+                        {
+                            heading: "Service Delivery",
+                            items: ["Owned global delivery, SDLC, and managed regional budgets."]
+                        }
                     ]
                 },
                 {
@@ -195,9 +211,18 @@ o	Partnered with Microsoft on roadmaps, feature adoption, user workshops and ena
                     tenure: 4,
                     summary: "Spearheaded PLM architecture modernization and technical debt reduction.",
                     details: [
-                        "**Leadership:** Led architecture team, influenced technology roadmap, and assessed technical feasibility.",
-                        "**Implementation:** Designed Windchill customizations and REST/SOAP integrations. Defined repository branching strategy.",
-                        "**Optimization:** Executed roadmap to reduce technical debt and integrated development processes into release automation."
+                        {
+                            heading: "Leadership",
+                            items: ["Led architecture team, influenced technology roadmap, and assessed technical feasibility."]
+                        },
+                        {
+                            heading: "Implementation",
+                            items: ["Designed Windchill customizations and REST/SOAP integrations. Defined repository branching strategy."]
+                        },
+                        {
+                            heading: "Optimization",
+                            items: ["Executed roadmap to reduce technical debt and integrated development processes into release automation."]
+                        }
                     ]
                 },
                 {
@@ -208,9 +233,18 @@ o	Partnered with Microsoft on roadmaps, feature adoption, user workshops and ena
                     tenure: 6,
                     summary: "Managed global delivery, integration projects, and performance testing.",
                     details: [
-                        "**Delivery:** Captured business requirements, led integrations, and implemented High-Level Designs.",
-                        "**Management:** Managed offshore/on-site teams and ensured SOW compliance.",
-                        "**Quality:** Introduced JMeter-based performance testing and implemented BOM release automation."
+                        {
+                            heading: "Delivery",
+                            items: ["Captured business requirements, led integrations, and implemented High-Level Designs."]
+                        },
+                        {
+                            heading: "Management",
+                            items: ["Managed offshore/on-site teams and ensured SOW compliance."]
+                        },
+                        {
+                            heading: "Quality",
+                            items: ["Introduced JMeter-based performance testing and implemented BOM release automation."]
+                        }
                     ]
                 },
                 {
@@ -221,9 +255,18 @@ o	Partnered with Microsoft on roadmaps, feature adoption, user workshops and ena
                     tenure: 5,
                     summary: "Provided expert technical support and solutioning for Windchill products.",
                     details: [
-                        "Resolved complex technical issues collaborating with R&D.",
-                        "Authored comprehensive technical documentation.",
-                        "Received Certificate of Excellence for customer satisfaction."
+                        {
+                            heading: "Support",
+                            items: ["Resolved complex technical issues collaborating with R&D."]
+                        },
+                        {
+                            heading: "Documentation",
+                            items: ["Authored comprehensive technical documentation."]
+                        },
+                        {
+                            heading: "Recognition",
+                            items: ["Received Certificate of Excellence for customer satisfaction."]
+                        }
                     ]
                 }
             ],
@@ -450,20 +493,27 @@ o	Partnered with Microsoft on roadmaps, feature adoption, user workshops and ena
                         <p class="text-slate-700 italic text-lg">"${role.summary}"</p>
                     </div>
 
-                    <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center">
+                    <h3 class="text-lg font-bold text-slate-900 mb-6 flex items-center">
                         <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3 text-sm">★</span>
                         Key Responsibilities & Achievements
                     </h3>
-                    <ul class="space-y-4">
-                        ${role.details.map(d => `
-                            <li class="flex items-start group">
-                                <div class="mt-1.5 mr-4 w-1.5 h-1.5 rounded-full bg-indigo-400 group-hover:bg-indigo-600 transition-colors flex-shrink-0"></div>
-                                <span class="text-slate-600 leading-relaxed group-hover:text-slate-900 transition-colors">
-                                    ${d.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 font-bold">$1</strong>')}
-                                </span>
-                            </li>
+                    <div class="space-y-6">
+                        ${role.details.map(detail => `
+                            <div class="space-y-3">
+                                <h4 class="text-sm font-semibold text-slate-900 uppercase tracking-wider">${detail.heading}</h4>
+                                <ul class="space-y-3">
+                                    ${detail.items.map(item => `
+                                        <li class="flex items-start group">
+                                            <div class="mt-1.5 mr-4 w-1.5 h-1.5 rounded-full bg-indigo-400 group-hover:bg-indigo-600 transition-colors flex-shrink-0"></div>
+                                            <p class="text-slate-600 text-sm leading-relaxed group-hover:text-slate-900 transition-colors">
+                                                ${item}
+                                            </p>
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                            </div>
                         `).join('')}
-                    </ul>
+                    </div>
                 </div>
             `;
         }
