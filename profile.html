@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Analytics: Techno-Managerial Architect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+        }
+
+        /* Chart Container Utilities */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 300px; /* Default mobile height */
+        }
+        
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+
+        /* Custom Scrollbar for side panels */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 3px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        .nav-item.active {
+            background-color: #eff6ff; /* blue-50 */
+            color: #2563eb; /* blue-600 */
+            border-right: 3px solid #2563eb;
+        }
+
+        .skill-tag {
+            transition: all 0.2s ease;
+        }
+        .skill-tag:hover {
+            transform: translateY(-1px);
+        }
+    </style>
+    <!-- Chosen Palette: Corporate Modern (Slate, Blue, Indigo) - chosen for professionalism and clarity suitable for an executive technical profile. -->
+    <!-- Application Structure Plan: Dashboard layout. 
+         - Sidebar: Navigation for logical sections (Profile Overview, Competency Matrix, Career Timeline, Impact Showcase).
+         - Main Content: Dynamic injection area.
+         - 'Overview': High-level summary + Radar chart for skill balance (Strategy vs Tech).
+         - 'Competencies': Interactive filterable grid to manage the dense skill list.
+         - 'Experience': Interactive timeline/list where clicking a role updates a detail view + Gantt chart for tenure context.
+         - 'Impact': Card-based layout for achievements.
+         Rationle: This structure breaks down 18+ years of dense experience into consumable chunks, allowing the user to dive deep into specific areas without being overwhelmed by text. -->
+    <!-- Visualization & Content Choices:
+         1. Radar Chart (Chart.js): Visualizes the "Techno-Managerial" balance (Strategy, AI, DevOps, Architecture, Leadership). Goal: Show the multi-dimensional nature of the profile.
+         2. Horizontal Bar Chart (Chart.js): Visualizes tenure duration across different roles. Goal: Show stability and career progression.
+         3. Interactive Filter Grid (Vanilla JS): Categorizes skills. Goal: Organize 'Core Competencies' table into an explorable format.
+         4. Card Grid (HTML/Tailwind): 'Key Achievements' and 'Education'. Goal: Clean presentation of text-heavy wins.
+         CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="text-slate-800">
+
+    <div class="flex flex-col lg:flex-row min-h-screen">
+        
+        <!-- Mobile Header -->
+        <div class="lg:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center sticky top-0 z-50">
+            <h1 class="text-lg font-bold text-slate-900">Profile Analytics</h1>
+            <button id="mobile-menu-btn" class="text-slate-600 focus:outline-none">
+                <span class="text-2xl">&#9776;</span>
+            </button>
+        </div>
+
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar" class="hidden lg:flex flex-col w-full lg:w-64 bg-white border-r border-slate-200 h-auto lg:h-screen sticky top-0 overflow-y-auto">
+            <div class="p-6 border-b border-slate-100">
+                <h1 class="text-xl font-bold text-slate-900 tracking-tight">[Your Name]</h1>
+                <p class="text-xs text-slate-500 mt-1 uppercase tracking-wider">Global Service Owner</p>
+                <p class="text-xs text-slate-500">Techno-Managerial Architect</p>
+            </div>
+            
+            <div class="flex-1 py-6 space-y-1">
+                <a href="#" onclick="navigateTo('overview')" class="nav-item active flex items-center px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                    <span class="mr-3">📊</span> Executive Summary
+                </a>
+                <a href="#" onclick="navigateTo('skills')" class="nav-item flex items-center px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                    <span class="mr-3">🛠️</span> Core Competencies
+                </a>
+                <a href="#" onclick="navigateTo('experience')" class="nav-item flex items-center px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                    <span class="mr-3">💼</span> Career Timeline
+                </a>
+                <a href="#" onclick="navigateTo('impact')" class="nav-item flex items-center px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                    <span class="mr-3">🏆</span> Strategic Impact
+                </a>
+                <a href="#" onclick="navigateTo('education')" class="nav-item flex items-center px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+                    <span class="mr-3">🎓</span> Education & Certs
+                </a>
+            </div>
+
+            <div class="p-6 border-t border-slate-100 bg-slate-50">
+                <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Contact</h3>
+                <p class="text-sm text-slate-700 mb-1">+91 xxx</p>
+                <p class="text-sm text-slate-700 mb-1">xxx.xx@gmail.com</p>
+                <p class="text-sm text-slate-700">Pune, India</p>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-4 md:p-8 overflow-y-auto bg-slate-50">
+            <div id="content-area" class="max-w-6xl mx-auto space-y-8">
+                <!-- Content injected via JS -->
+            </div>
+        </main>
+
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- DATA STORE ---
+        const profileData = {
+            summary: {
+                title: "Strategic Engineering Leader & AI Evangelist",
+                description: "Techno-managerial professional with 18+ years of global experience bridging ITIL/Scrum delivery with modern DevOps, Cloud Optimization, and GenAI innovation. Proven track record in leading global teams, architecting AI solutions, and driving enterprise-wide GitHub Copilot adoption.",
+                highlights: [
+                    "AI Transformation Leader (GenAI, Copilot, LLMs)",
+                    "Hands-on Architect (RAG Agents, HiveMQTT, Azure)",
+                    "Strategic Delivery (Global Teams, Lean IT, Security)"
+                ]
+            },
+            skills: {
+                "Architecture & Cloud": ["PTC Windchill Architecture", "PTC Thingworx", "Kepware", "Azure Functions", "SOAP & REST Services", "Microservices", "Cloud Optimization"],
+                "DevOps & Integration": ["GitHub Enterprise", "GitHub Copilot", "CI/CD", "GitHub Actions", "Azure DevOps", "Python", "Java", "JavaScript", "SQL", "Automation Testing (REST, UI)"],
+                "AI & Data": ["RAG AI Agent Development", "Data Integrations (Kafka)", "ML Algorithms & Training", "Prompt Engineering", "GenAI Models (GPT-5.1, Claude)", "Power BI"],
+                "Management & Governance": ["Global Team Leadership (18+ yrs)", "Certified Scrum Master", "ITIL 4", "Stakeholder Engagement", "Budget & Cost Allocation", "GDPR Compliance", "Lean IT Strategy"]
+            },
+            experience: [
+                {
+                    role: "Global Service Owner | Architect - Data Delivery",
+                    company: "GitHub / [Current Company]",
+                    location: "Pune, India",
+                    period: "2022 – Present",
+                    tenure: 3, // approximate years for chart
+                    summary: "Driving AI adoption and modernizing data delivery architecture.",
+                    details: [
+                        "**Strategic AI Adoption:** Primary contact for GitHub Enterprise Cloud & Copilot. Facilitated workshops, drove adoption, and built internal user community.",
+                        "**IIoT Architecture:** Implemented HiveMQ Edge adapters for logistic automation (Viadat XML/JSON) and Azure Functions.",
+                        "**Architectural Strategy:** Drove strategy for Data Mesh architecture transition and data product ownership.",
+                        "**DevOps Automation:** Led implementation of self-hosted runners and pipelines using GitHub Workflows and Azure DevOps.",
+                        "**Service Delivery:** Managed end-to-end global delivery, SDLC, and regional budgets."
+                    ]
+                },
+                {
+                    role: "Technical Owner / Architect – Windchill",
+                    company: "[Previous Company]",
+                    location: "Pune, India",
+                    period: "2018 – 2022",
+                    tenure: 4,
+                    summary: "Led PLM architecture and technical debt reduction.",
+                    details: [
+                        "**Leadership:** Led architecture team, influenced technology roadmap, and assessed technical feasibility.",
+                        "**Implementation:** Designed Windchill customizations and REST/SOAP integrations. Defined repository branching strategy.",
+                        "**Optimization:** Executed roadmap to reduce technical debt and integrated development processes into release automation."
+                    ]
+                },
+                {
+                    role: "Project Lead / Senior Windchill Developer",
+                    company: "[Previous Company]",
+                    location: "Singapore/Italy",
+                    period: "2012 – 2018",
+                    tenure: 6,
+                    summary: "Managed global delivery and performance testing.",
+                    details: [
+                        "**Delivery:** Captured business requirements, led integrations, and implemented High-Level Designs.",
+                        "**Management:** Managed offshore/on-site teams and ensured SOW compliance.",
+                        "**Quality:** Introduced JMeter-based performance testing and implemented BOM release automation."
+                    ]
+                },
+                {
+                    role: "Senior Product Specialist",
+                    company: "PTC",
+                    location: "Pune, India",
+                    period: "2007 – 2012",
+                    tenure: 5,
+                    summary: "Specialist support and complex issue resolution.",
+                    details: [
+                        "Resolved complex technical issues collaborating with R&D.",
+                        "Authored comprehensive technical documentation.",
+                        "Received Certificate of Excellence for customer satisfaction."
+                    ]
+                },
+                {
+                    role: "Early Career (Engineering)",
+                    company: "Nichrome India / Others",
+                    location: "Pune, India",
+                    period: "2003 – 2007",
+                    tenure: 4,
+                    summary: "Foundational engineering roles.",
+                    details: [
+                        "Executive Engineer (Design) at Nichrome India Ltd.",
+                        "Mechanical Engineer roles focused on product design."
+                    ]
+                }
+            ],
+            achievements: [
+                { title: "AI Agent Chatbots", desc: "Developed RAG-based agents for HR policy and Security knowledge bases.", icon: "🤖" },
+                { title: "Real-time Dashboards", desc: "Built order dashboards integrating SAP data via Kafka and Azure Functions.", icon: "bq" },
+                { title: "AI Upskilling", desc: "Defined and delivered AI/ML training programs, building capabilities from scratch.", icon: "📈" },
+                { title: "Global Thought Leadership", desc: "Presented at APAC IT conferences on digital transformation.", icon: "🌏" },
+                { title: "ServiceNow Automation", desc: "Automated license management and built microservices for file uploads.", icon: "⚡" }
+            ],
+            education: [
+                { degree: "PG Diploma in Data Analytics", inst: "IIIT Bangalore & UpGrad", year: "2018" },
+                { degree: "Diploma in Product Design", inst: "-", year: "2006" },
+                { degree: "Bachelor of Engineering (Mechanical)", inst: "IET, University", year: "2002" }
+            ],
+            certs: ["Certified Scrum Master", "ITIL® 4 Foundation", "Microsoft Certified Azure Fundamental", "GitHub Copilot"]
+        };
+
+        // --- CHART CONFIGS ---
+        
+        // 1. Radar Chart: Skill Balance
+        const renderRadarChart = (ctx) => {
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Strategic Leadership', 'AI & GenAI', 'Cloud Architecture', 'DevOps & Automation', 'Legacy/PLM Systems'],
+                    datasets: [{
+                        label: 'Proficiency & Focus',
+                        data: [90, 85, 88, 85, 95],
+                        backgroundColor: 'rgba(37, 99, 235, 0.2)', // Blue-600 low opacity
+                        borderColor: 'rgba(37, 99, 235, 1)',
+                        pointBackgroundColor: 'rgba(37, 99, 235, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e2e8f0' },
+                            grid: { color: '#e2e8f0' },
+                            pointLabels: {
+                                font: { size: 12, family: "'Inter', sans-serif" },
+                                color: '#475569'
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        };
+
+        // 2. Bar Chart: Career Tenure
+        const renderTenureChart = (ctx) => {
+            const labels = profileData.experience.map(e => e.role.split('|')[0].trim()); // Shorten names
+            const data = profileData.experience.map(e => e.tenure);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Years of Experience',
+                        data: data,
+                        backgroundColor: [
+                            '#4f46e5', // Indigo
+                            '#6366f1', 
+                            '#818cf8', 
+                            '#a5b4fc',
+                            '#c7d2fe'
+                        ],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { font: { family: "'Inter', sans-serif" } }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { autoSkip: false, font: { family: "'Inter', sans-serif", size: 11 } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => `${context.raw} Years`
+                            }
+                        }
+                    }
+                }
+            });
+        };
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderOverview() {
+            const content = document.getElementById('content-area');
+            content.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
+                    <!-- Intro Card -->
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-slate-100">
+                        <div class="flex items-center mb-4">
+                            <span class="text-3xl mr-3">🚀</span>
+                            <h2 class="text-2xl font-bold text-slate-900">Executive Profile Analysis</h2>
+                        </div>
+                        <p class="text-slate-600 leading-relaxed mb-6">
+                            ${profileData.summary.description}
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            ${profileData.summary.highlights.map(h => `
+                                <div class="bg-blue-50 text-blue-800 p-3 rounded-lg text-sm font-semibold border border-blue-100 flex items-center">
+                                    <span class="mr-2 text-blue-500">✓</span> ${h.split('(')[0]}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Radar Chart Card -->
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-100 flex flex-col">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4">Competency Balance</h3>
+                        <div class="chart-container flex-grow">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                        <p class="text-xs text-center text-slate-400 mt-2">Proficiency distribution across domains</p>
+                    </div>
+
+                    <!-- Quick Stats Row -->
+                    <div class="lg:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-indigo-500">
+                            <p class="text-xs text-slate-500 uppercase font-bold">Total Exp</p>
+                            <p class="text-2xl font-bold text-slate-900">18+ Years</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-teal-500">
+                            <p class="text-xs text-slate-500 uppercase font-bold">Certifications</p>
+                            <p class="text-2xl font-bold text-slate-900">${profileData.certs.length}</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-amber-500">
+                            <p class="text-xs text-slate-500 uppercase font-bold">Key Roles</p>
+                            <p class="text-2xl font-bold text-slate-900">${profileData.experience.length}</p>
+                        </div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-rose-500">
+                            <p class="text-xs text-slate-500 uppercase font-bold">Focus</p>
+                            <p class="text-xl font-bold text-slate-900">AI & Cloud</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Init Chart
+            setTimeout(() => {
+                const ctx = document.getElementById('radarChart').getContext('2d');
+                renderRadarChart(ctx);
+            }, 0);
+        }
+
+        function renderSkills() {
+            const content = document.getElementById('content-area');
+            
+            // Build filter buttons
+            const categories = Object.keys(profileData.skills);
+            const buttonsHtml = categories.map((cat, index) => `
+                <button onclick="filterSkills('${cat}', this)" 
+                    class="skill-filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors border 
+                    ${index === 0 ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}">
+                    ${cat}
+                </button>
+            `).join('');
+
+            content.innerHTML = `
+                <div class="space-y-6 animate-fade-in">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Core Competencies Matrix</h2>
+                        <p class="text-slate-500 mb-6">Explore technical and managerial capabilities by category.</p>
+                        
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <button onclick="filterSkills('All', this)" class="skill-filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors">All</button>
+                            ${buttonsHtml}
+                        </div>
+
+                        <div id="skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Skills injected here -->
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Initial render of first category to not overwhelm, or 'All' if preferred. Let's do the first category.
+            filterSkills(categories[0], document.querySelector('.skill-filter-btn:nth-child(2)'));
+        }
+
+        function filterSkills(category, btn) {
+            // Update active button state
+            document.querySelectorAll('.skill-filter-btn').forEach(b => {
+                b.className = 'skill-filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors border bg-white text-slate-600 border-slate-200 hover:bg-slate-50';
+            });
+            btn.className = 'skill-filter-btn px-4 py-2 rounded-full text-sm font-medium transition-colors border bg-indigo-600 text-white border-indigo-600 shadow-sm';
+
+            const grid = document.getElementById('skills-grid');
+            let html = '';
+
+            const categoriesToShow = category === 'All' ? Object.keys(profileData.skills) : [category];
+
+            categoriesToShow.forEach(cat => {
+                profileData.skills[cat].forEach(skill => {
+                    // Simple icon logic based on text content
+                    let icon = '🔧';
+                    if(cat.includes('AI')) icon = '🤖';
+                    if(cat.includes('Cloud')) icon = '☁️';
+                    if(cat.includes('Management')) icon = '👥';
+
+                    html += `
+                        <div class="skill-tag bg-slate-50 p-4 rounded-lg border border-slate-100 flex items-center">
+                            <span class="text-2xl mr-3">${icon}</span>
+                            <div>
+                                <h4 class="font-semibold text-slate-800 text-sm">${skill}</h4>
+                                <span class="text-xs text-slate-400 uppercase tracking-wide">${cat.split('&')[0]}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function renderExperience() {
+            const content = document.getElementById('content-area');
+            content.innerHTML = `
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in">
+                    <!-- Left: Timeline Navigation -->
+                    <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-6 border border-slate-100 h-fit">
+                        <h3 class="text-lg font-bold text-slate-800 mb-4">Career Journey</h3>
+                        <div class="space-y-4 relative border-l-2 border-slate-100 ml-3 pl-6" id="timeline-list">
+                            ${profileData.experience.map((exp, index) => `
+                                <div class="timeline-item cursor-pointer group" onclick="showRoleDetail(${index})">
+                                    <div class="absolute -left-[21px] w-3 h-3 rounded-full border-2 border-white ${index === 0 ? 'bg-indigo-600 ring-2 ring-indigo-100' : 'bg-slate-300'} group-hover:bg-indigo-500 transition-colors"></div>
+                                    <p class="text-xs font-semibold text-slate-400 mb-1">${exp.period}</p>
+                                    <h4 class="text-sm font-bold text-slate-800 group-hover:text-indigo-600 transition-colors">${exp.role.split('|')[0]}</h4>
+                                    <p class="text-xs text-slate-500 truncate">${exp.company}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="mt-8 pt-6 border-t border-slate-100">
+                             <h4 class="text-xs font-bold text-slate-400 uppercase mb-4">Tenure Analysis</h4>
+                             <div class="chart-container" style="height: 200px;">
+                                <canvas id="tenureChart"></canvas>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Role Details -->
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-slate-100" id="role-detail-view">
+                        <!-- Content injected by showRoleDetail -->
+                    </div>
+                </div>
+            `;
+
+            // Init sub-chart
+            setTimeout(() => {
+                const ctx = document.getElementById('tenureChart').getContext('2d');
+                renderTenureChart(ctx);
+                showRoleDetail(0); // Show most recent role by default
+            }, 0);
+        }
+
+        function showRoleDetail(index) {
+            const role = profileData.experience[index];
+            const container = document.getElementById('role-detail-view');
+            
+            // Highlight active timeline item
+            document.querySelectorAll('.timeline-item div').forEach(d => {
+                d.classList.remove('bg-indigo-600', 'ring-2', 'ring-indigo-100');
+                d.classList.add('bg-slate-300');
+            });
+            const activeDot = document.querySelectorAll('.timeline-item div')[index];
+            activeDot.classList.remove('bg-slate-300');
+            activeDot.classList.add('bg-indigo-600', 'ring-2', 'ring-indigo-100');
+
+            // Format details with bolding
+            const formattedDetails = role.details.map(d => {
+                // Simple markdown-ish parser for bold text (**text**)
+                return `<li class="flex items-start">
+                    <span class="text-indigo-500 mr-2 mt-1.5">•</span>
+                    <span class="text-slate-700 leading-relaxed">${d.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900">$1</strong>')}</span>
+                </li>`;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="animate-fade-in">
+                    <div class="flex justify-between items-start mb-6 border-b border-slate-100 pb-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-900 mb-1">${role.role}</h2>
+                            <p class="text-lg text-slate-600 font-medium">${role.company} <span class="text-slate-300 mx-2">|</span> <span class="text-sm text-slate-500">${role.location}</span></p>
+                        </div>
+                        <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-md text-sm font-bold">${role.period}</span>
+                    </div>
+                    
+                    <div class="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-100">
+                        <p class="text-slate-600 italic">"${role.summary}"</p>
+                    </div>
+
+                    <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wide mb-4">Key Responsibilities & Wins</h3>
+                    <ul class="space-y-3 mb-6">
+                        ${formattedDetails}
+                    </ul>
+                </div>
+            `;
+        }
+
+        function renderImpact() {
+            const content = document.getElementById('content-area');
+            content.innerHTML = `
+                <div class="animate-fade-in space-y-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Key Strategic Achievements</h2>
+                        <p class="text-slate-500">Highlighting high-impact outcomes in AI, automation, and global leadership.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${profileData.achievements.map((item, i) => `
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow group">
+                                <div class="w-12 h-12 bg-indigo-50 rounded-lg flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                                    ${item.icon}
+                                </div>
+                                <h3 class="text-lg font-bold text-slate-900 mb-2">${item.title}</h3>
+                                <p class="text-sm text-slate-600 leading-relaxed">${item.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderEducation() {
+            const content = document.getElementById('content-area');
+            content.innerHTML = `
+                <div class="animate-fade-in max-w-4xl">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-6">Education & Certifications</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Education Column -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center"><span class="mr-2">🎓</span> Academic Background</h3>
+                            <div class="space-y-6">
+                                ${profileData.education.map(edu => `
+                                    <div class="relative pl-4 border-l-2 border-indigo-100">
+                                        <h4 class="font-bold text-slate-900">${edu.degree}</h4>
+                                        <p class="text-sm text-slate-600">${edu.inst}</p>
+                                        <p class="text-xs text-slate-400 mt-1">${edu.year}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Certs Column -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                            <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center"><span class="mr-2">📜</span> Professional Certifications</h3>
+                            <div class="flex flex-wrap gap-2">
+                                ${profileData.certs.map(cert => `
+                                    <span class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-md text-sm text-slate-700 font-medium flex items-center">
+                                        <span class="w-2 h-2 bg-teal-400 rounded-full mr-2"></span>
+                                        ${cert}
+                                    </span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- NAVIGATION LOGIC ---
+        function navigateTo(sectionId) {
+            // Update active nav state
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if(item.getAttribute('onclick').includes(sectionId)) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Close mobile menu if open
+            const sidebar = document.getElementById('sidebar');
+            if(window.innerWidth < 1024) {
+                 sidebar.classList.add('hidden');
+            }
+
+            // Route to render function
+            switch(sectionId) {
+                case 'overview': renderOverview(); break;
+                case 'skills': renderSkills(); break;
+                case 'experience': renderExperience(); break;
+                case 'impact': renderImpact(); break;
+                case 'education': renderEducation(); break;
+            }
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const btn = document.getElementById('mobile-menu-btn');
+            const sidebar = document.getElementById('sidebar');
+            btn.addEventListener('click', () => {
+                sidebar.classList.toggle('hidden');
+                sidebar.classList.toggle('fixed');
+                sidebar.classList.toggle('inset-0');
+                sidebar.classList.toggle('z-40');
+            });
+
+            // Initial Render
+            renderOverview();
+        });
+
+    </script>
+</body>
+</html>
