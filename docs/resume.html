@@ -311,7 +311,7 @@
                         },
                         {
                             heading: "Mentor & Documentation",
-                            items: ["Improved team performance in Mentor role.",
+                            items: ["Improved team performance in Metor role.",
                                     "Authored comprehensive technical documentation for customers."
                                    ]
                         },
@@ -344,7 +344,7 @@
                     location: "Ghaziabad, India",
                     period: "2003 – 2005",
                     tenure: 2,
-                    summary: "Oversee production schedule at shop floor and assist with erection & commissioning activities.",
+                    summary: "Oversee production schedule at shop floor and assist with erection & commisioning activities.",
                     details: [
                         {
                             heading: "Production & Commisioning",
@@ -603,6 +603,15 @@
                     </div>
                 </div>
             `;
+            // On smaller screens, scroll the role detail panel into view so key responsibilities are visible
+            setTimeout(() => {
+                if (window.innerWidth < 1024) {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // also set focus for accessibility
+                    panel.setAttribute('tabindex', '-1');
+                    panel.focus({ preventScroll: true });
+                }
+            }, 60);
         }
 
         // 4. IMPACT SECTION
