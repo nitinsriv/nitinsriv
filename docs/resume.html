@@ -75,6 +75,41 @@
         .timeline-item div.absolute {
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
+
+        /* Mobile slide-in overlay for role details */
+        .mobile-overlay-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(2,6,23,0.6);
+            display: none;
+            z-index: 60;
+        }
+        .mobile-overlay {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            transform: translateX(110%);
+            transition: transform 320ms cubic-bezier(.2,.9,.2,1), opacity 200ms;
+            z-index: 70;
+            box-shadow: -12px 0 40px rgba(15,23,42,0.12);
+            overflow-y: auto;
+        }
+        .mobile-overlay.show {
+            transform: translateX(0%);
+        }
+        .mobile-overlay .mobile-close-btn {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: flex-end;
+            padding: 12px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.6));
+            z-index: 80;
+        }
     </style>
     <!-- Chosen Palette: Slate (Neutrals) + Indigo/Blue (Primary) + Teal/Rose (Accents). Professional, clean, and data-centric. -->
     <!-- Application Structure Plan: Dashboard Layout.
@@ -559,7 +594,7 @@
                 }
             });
 
-            panel.innerHTML = `
+            const detailHtml = `
                 <div class="animate-fade-in">
                     <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-6 pb-6 border-b border-slate-100">
                         <div>
@@ -601,8 +636,62 @@
                             </div>
                         `).join('')}
                     </div>
-                </div>
-            `;
+                    </div>
+                `;
+
+            // If on mobile, render as a slide-in overlay instead of injecting into the right column
+            if (window.innerWidth < 1024) {
+                // create backdrop and overlay elements
+                let backdrop = document.querySelector('.mobile-overlay-backdrop');
+                if (!backdrop) {
+                    backdrop = document.createElement('div');
+                    backdrop.className = 'mobile-overlay-backdrop';
+                    document.body.appendChild(backdrop);
+                }
+
+                let overlay = document.querySelector('.mobile-overlay');
+                if (!overlay) {
+                    overlay = document.createElement('div');
+                    overlay.className = 'mobile-overlay';
+                    overlay.innerHTML = `
+                        <div class="mobile-close-btn">
+                            <button aria-label="Close details" class="px-3 py-2 rounded-md text-slate-600 hover:bg-slate-100">✕</button>
+                        </div>
+                        <div class="p-6">${detailHtml}</div>
+                    `;
+                    document.body.appendChild(overlay);
+
+                    // close handler
+                    overlay.querySelector('.mobile-close-btn button').addEventListener('click', () => {
+                        overlay.classList.remove('show');
+                        backdrop.style.display = 'none';
+                        setTimeout(() => { overlay.remove(); backdrop.remove(); }, 320);
+                    });
+                    backdrop.addEventListener('click', () => {
+                        overlay.querySelector('.mobile-close-btn button').click();
+                    });
+                } else {
+                    // replace content
+                    overlay.innerHTML = `
+                        <div class="mobile-close-btn">
+                            <button aria-label="Close details" class="px-3 py-2 rounded-md text-slate-600 hover:bg-slate-100">✕</button>
+                        </div>
+                        <div class="p-6">${detailHtml}</div>
+                    `;
+                    overlay.querySelector('.mobile-close-btn button').addEventListener('click', () => {
+                        overlay.classList.remove('show');
+                        backdrop.style.display = 'none';
+                        setTimeout(() => { overlay.remove(); backdrop.remove(); }, 320);
+                    });
+                }
+
+                backdrop.style.display = 'block';
+                setTimeout(() => { overlay.classList.add('show'); }, 20);
+
+                return;
+            }
+
+            panel.innerHTML = detailHtml;
             // On smaller screens, scroll the role detail panel into view so key responsibilities are visible
             setTimeout(() => {
                 if (window.innerWidth < 1024) {
