@@ -213,9 +213,7 @@ Repository: [nitinsriv/ai-agents](https://github.com/nitinsriv/ai-agents)
   
 
 </details>  
-<details>  <summary><strong>📄 README Excerpts & Usage (Verbatim)</strong></summary>
-
-🧾 Description
+<details>  <summary><strong>📄 Description</strong></summary>
 
  "An AI Agent which provides a simple command-line interface for generating code snippets using langchain."
 
@@ -301,16 +299,19 @@ Repository: nitinsriv/rag-based-pdf
 
 ✅ Example usage for document search, Q&A and knowledge-base style assistants.
 
-</details> <details> <summary><strong>📄 README Excerpts & Usage (Verbatim)</strong></summary>
+</details> <details> <summary><strong>📄 Description </strong></summary>
 
 RAG-based PDF demo: extract text from PDFs, create embeddings, store in a vector DB and run retrieval-augmented queries against an LLM.
+</details>
 
-✨ Features
+<details><summary><strong>✨ Features </strong></summary>
 
 PDF ingestion
 Text chunking
 Embeddings (OpenAI)
 Retriever + LLM composition (context + generation)
+
+</details>
 
 ---
 
