@@ -283,17 +283,18 @@ public class BinarySearch {
     Extractor --> Output[output.txt]
    ```
 
-details>
+</details>
 
 ---
 
-# 🔵 RAG Agent Qury PDF
+# 🔵 RAG Agent Query PDF
 
 <mark><strong>Retrieval-Augmented Generation (RAG) for answering questions over PDF documents</strong></mark>
 
 Repository: nitinsriv/rag-based-pdf
 
 <details> <summary><strong>🎯 High-level Outcome</strong></summary>
+	
 ✅ Pipeline to ingest PDF documents, build a vector index of text chunks, and answer user questions by retrieving relevant chunks and conditioning an LLM (RAG).
 
 ✅ Demonstrates PDF parsing, chunking, embedding generation, vector store (FAISS/Chroma), and a retriever+LLM query flow.
@@ -301,9 +302,8 @@ Repository: nitinsriv/rag-based-pdf
 ✅ Example usage for document search, Q&A and knowledge-base style assistants.
 
 </details> <details> <summary><strong>📄 README Excerpts & Usage (Verbatim)</strong></summary>
-🧾 Description
 
-"RAG-based PDF demo: extract text from PDFs, create embeddings, store in a vector DB and run retrieval-augmented queries against an LLM."
+RAG-based PDF demo: extract text from PDFs, create embeddings, store in a vector DB and run retrieval-augmented queries against an LLM.
 
 ✨ Features
 
