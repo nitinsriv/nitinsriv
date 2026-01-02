@@ -289,7 +289,7 @@ public class BinarySearch {
 
 <mark><strong>Retrieval-Augmented Generation (RAG) for answering questions over PDF documents</strong></mark>
 
-Repository: nitinsriv/rag-based-pdf
+Repository: [nitinsriv/rag-based-pdf](https://github.com/nitinsriv/ai-agents/tree/main/rag-based-pdf)
 
 <details> <summary><strong>🎯 High-level Outcome</strong></summary>
 	
